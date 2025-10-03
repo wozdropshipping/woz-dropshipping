@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Woz Dropshipping</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo-dots" aria-hidden="true">
+        <span class="dot green"></span>
+        <span class="dot navy"></span>
+        <span class="dot blue"></span>
+      </div>
+      <div class="brand-text">
+        <div class="title">Woz</div>
+        <div class="subtitle">Dropshipping</div>
+      </div>
+    </div>
+
+    <div class="search-area">
+      <input id="searchInput" placeholder="¿Qué productos estás buscando?" />
+    </div>
+  </header>
+
+  <main>
+    <section class="controls">
+      <div class="dropper-box">
+        <div class="dropper-label">Droppers</div>
+        <div class="dropper-count" id="globalDroppers">—</div>
+        <small id="dropper-note">Estos droppers están viendo estos productos</small>
+      </div>
+
+      <!-- --- AQUI: Droppers por país (restaurado) --- -->
+      <div class="dropper-region">
+        <div class="region-title">Droppers por país</div>
+        <ul class="region-list">
+          <li><strong>Paraguay:</strong> <span class="region-count" data-country="py">12.350</span></li>
+          <li><strong>Argentina:</strong> <span class="region-count" data-country="ar">105.098</span></li>
+          <li><strong>Brasil:</strong> <span class="region-count" data-country="br">89.420</span></li>
+          <li><strong>Chile:</strong> <span class="region-count" data-country="cl">42.880</span></li>
+          <li><strong>Uruguay:</strong> <span class="region-count" data-country="uy">15.230</span></li>
+          <li><strong>Perú:</strong> <span class="region-count" data-country="pe">67.110</span></li>
+          <li><strong>Colombia:</strong> <span class="region-count" data-country="co">78.900</span></li>
+        </ul>
+      </div>
+      <!-- --- fin dropper-region --- -->
+
+      <div class="filters">
+        <select id="sortSelect">
+          <option value="relevance">Más relevantes</option>
+          <option value="price_low">Precio: más bajo</option>
+          <option value="price_high">Precio: más alto</option>
+          <option value="rating_high">Mejor calificados</option>
+        </select>
+
+        <select id="countryFilter">
+          <option value="all">Todos</option>
+          <option value="nacional">Productos Nacionales</option>
+          <option value="internacional">Productos Internacionales</option>
+        </select>
+
+        <select id="providerFilter">
+          <option value="all">Todos los proveedores</option>
+        </select>
+
+        <select id="ratingFilter">
+          <option value="all">Todas las calificaciones</option>
+          <option value="3">3 estrellas o más</option>
+          <option value="4">4 estrellas o más</option>
+          <option value="5">5 estrellas</option>
+        </select>
+
+        <button id="clearFilters" title="Limpiar filtros">🖋</button>
+      </div>
+    </section>
+
+    <section id="productList" class="product-list" aria-live="polite"></section>
+
+    <div id="loading" class="loading">Cargando más productos...</div>
+  </main>
+
+  <!-- TEMPLATE DE PRODUCTO -->
+  <template id="productTemplate">
+    <div class="product-card">
+      <div class="thumb">
+        <div class="dots-logo">
+          <span class="dot green"></span>
+          <span class="dot navy"></span>
+          <span class="dot blue"></span>
+        </div>
+      </div>
+
+      <div class="info">
+        <h2 class="title"></h2>
+
+        <div class="provider">
+          <span class="provider-name"></span>
+          <span class="verified" title="Proveedor verificado">✔︎</span>
+        </div>
+
+        <div class="prices">
+          <div class="provider-price">Precio proveedor: <span class="price-provider"></span></div><br>
+          <div class="suggested-price">Precio sugerido: <strong class="price-suggested"></strong></div>
+        </div>
+
+        <div class="rating">
+          <span class="stars"></span>
+          <span class="reviews"></span>
+        </div>
+
+        <div class="extra-info">
+          <div class="sold-count"></div>
+          <div class="profitability"></div>
+        </div>
+
+        <div class="droppers">
+          <svg class="user-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z"/>
+          </svg>
+          <span class="droppers-count"></span>
+        </div>
+      </div>
+    </div>
+  </template>
+  <!-- FIN TEMPLATE -->
+
+  <script src="app.js"></script>
+</body>
+</html>

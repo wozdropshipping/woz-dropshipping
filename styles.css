@@ -1,0 +1,357 @@
+/* styles.css - Consolidado y limpio */
+/* Importa Roboto */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+
+:root{
+  --bg:#f6f7fb;
+  --card-bg:#ffffff;
+  --muted:#6b7580;
+  --accent:#1a5f8a;
+  --green:#2ecc71;
+  --navy:#0f3b48;
+  --blue:#2b7be4;
+  --yellow:#ffb400; /* naranja/amarillo */
+  --radius:12px;
+  --container:1120px;
+  --gap:12px;
+}
+
+/* Reset básico */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: 'Roboto', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:var(--bg);
+  color:#12202b;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  -webkit-font-feature-settings: "liga" 1;
+}
+
+/* Contenedor centrado */
+main{
+  max-width:var(--container);
+  margin:0 auto;
+  padding:16px;
+}
+
+/* =======================
+   TOPBAR / CABECERA
+   ======================= */
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:10px 0;
+}
+
+/* Brand (logo + texto) */
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+}
+
+/* Logo header: tres puntos */
+.logo-dots, .dots-logo {
+  display:flex;
+  gap:6px;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+
+/* Header dots (más visibles que los de producto) */
+.logo-dots .dot{
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  display:inline-block;
+}
+.logo-dots .green{background:var(--green)}
+.logo-dots .navy{background:var(--navy)}
+.logo-dots .blue{background:var(--blue)}
+
+/* Texto de marca */
+.brand-text .title{
+  font-weight:900;
+  font-size:clamp(18px,2.6vw,24px);
+  line-height:1;
+  color:var(--navy);
+}
+/* Texto de marca */
+.brand-text sub.title{
+  font-weight:900;
+  font-size:clamp(18px,2.6vw,24px);
+  line-height:1;
+  color:var(--navy);
+}
+
+/* Búsqueda */
+.search-area{
+  margin-left:auto;
+  display:flex;
+  gap:20px;
+  align-items:center;
+  width:420px;
+  max-width:40%;
+}
+.search-area input{
+  width:100%;
+  padding:8px 12px;
+  border-radius:10px;
+  border:1px solid rgba(0,0,0,0.06);
+  outline:none;
+  font-size:14px;
+  background:#fff;
+}
+
+/* =======================
+   CONTROLS
+   ======================= */
+.controls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  padding:12px 0;
+  align-items:flex-start;
+}
+
+/* Droppers general */
+.dropper-box {
+  background: linear-gradient(180deg, #fff 0%, #fcfcfe 100%);
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  min-width: 220px;
+  width: 100%; /* ← Esto lo extiende horizontalmente */
+}
+.dropper-label{font-weight:700;color:#e07b1a;font-size:14px}
+.dropper-count{font-size:18px;font-weight:900;margin-top:6px;color:var(--navy)}
+.dropper-box small{color:var(--muted);display:block;margin-top:6px}
+
+/* Droppers por región */
+.dropper-region {
+  background: #fff;
+  border-radius: 12px;
+  padding: 10px 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  margin-top: 0;
+  width: 100%;
+}
+.region-title { font-weight:700; font-size:14px; color:var(--accent); margin-bottom:8px; }
+.region-list { list-style:none; margin:0; padding:0; }
+.region-list li { display:flex; justify-content:space-between; align-items:center; padding:4px 0; font-size:13px; color:var(--muted); border-bottom:1px dashed #eee; }
+.region-count { font-weight:700; color:var(--navy); }
+
+/* Filters */
+.filters{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-left:auto;
+}
+.filters select,
+.filters button{
+  padding:8px 10px;
+  border-radius:10px;
+  border:1px solid rgba(0,0,0,0.06);
+  background:#fff;
+  font-size:13px;
+}
+.filters button{cursor:pointer}
+
+/* =======================
+   PRODUCT LIST + CARD
+   ======================= */
+.product-list{
+  padding:12px 0;
+  display:grid;
+  gap:12px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* Card: ancho horizontal mantiene, se reduce verticalmente */
+.product-card{
+  display:grid;
+  grid-template-columns: 70px 1fr; /* cuadro de logo menor + texto flexible */
+  gap:10px;
+  background:var(--card-bg);
+  border-radius:10px;
+  padding:8px; /* más fino */
+  box-shadow:0 6px 18px rgba(10,20,30,0.04);
+  align-items:center;
+  overflow:hidden;
+}
+
+/* Thumb: sin borde visible, caja que evita que el texto se rompa */
+.product-card .thumb{
+  width:70px;
+  height:70px;
+  border-radius:8px;
+  background:transparent; /* sin fondo blanco para que no choque con texto */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:0;
+  overflow:hidden;
+  flex-shrink:0;
+}
+
+/* Dots logo pequeño dentro de thumb (para todos los productos) */
+.dots-logo {
+  display:flex;
+  gap:4px;
+  align-items:center;
+  justify-content:center;
+}
+.dots-logo .dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  display:inline-block;
+}
+.dots-logo .green { background: var(--green); }
+.dots-logo .navy  { background: var(--navy); }
+.dots-logo .blue  { background: var(--blue); }
+
+/* Info: intenta ocupar el resto, evitar que el título rompa el layout */
+.info{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  align-items:flex-start;
+  min-width:0; /* clave para que los hijos no obliguen ancho fijo */
+}
+
+/* Título: reducido para tarjetas más finas */
+.title{
+  font-size:14px;
+  margin:0;
+  font-weight:700;
+  color:var(--navy);
+  line-height:1.1;
+  word-break:break-word;
+}
+
+/* Proveedor y check */
+.provider{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:500;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.verified{
+  background:#fff6e6;
+  color:var(--yellow); /* check naranja */
+  padding:3px 8px;
+  border-radius:999px;
+  font-weight:700;
+  font-size:11px;
+}
+
+/* Prices: precio proveedor y sugerido SAME typography */
+.prices{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  margin-top:4px;
+}
+.provider-price, .suggested-price {
+  font-size:13px;
+  color:var(--muted);
+  font-weight:500; /* misma tipografía */
+  display:block;
+}
+/* Si quieres resaltar monto en strong, mantenlo igual visualmente: */
+.price-provider, .price-suggested {
+  font-weight:500;
+  color:var(--muted);
+}
+
+/* Rating: estrella y número, tamaño más compacto */
+.rating{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  margin-top:4px;
+}
+.stars{display:flex;gap:6px;align-items:center}
+.star{width:16px;height:16px;display:inline-block}
+.star svg{width:100%;height:100%;display:block}
+.reviews{color:var(--muted);font-size:12px}
+
+/* Extra info: ventas y rentabilidad */
+.extra-info{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  margin-top:6px;
+  font-size:12px;
+  color:var(--muted);
+}
+.sold-count{font-weight:600;color:var(--navy); font-size:12px;}
+.profitability{font-weight:700; font-size:12px;}
+.profitability.high{ color: var(--green); }        /* Alta rentabilidad: verde */
+.profitability.regular{ color:  var(--orange); }             /* Rentabilidad regular: anaranjado */
+
+/* Droppers (icono + numero) */
+.droppers{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:var(--#FFFFFF);
+  font-weight:600;
+  font-size:12px;
+}
+
+/* Loading */
+.loading{ text-align:center; padding:16px; color:var(--muted) }
+
+/* =======================
+   RESPONSIVE
+   ======================= */
+
+/* En pantallas pequeñas: topbar en columna (logo encima, buscador debajo centrado) */
+@media (max-width:900px){
+  .topbar{
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+  }
+  .search-area{
+    margin-left:0;
+    width:90%;
+    max-width:600px;
+  }
+  .product-list{
+    grid-template-columns:1fr;
+  }
+  /* hacer las tarjetas aún más finas si quieres */
+  .product-card{
+    grid-template-columns:60px 1fr;
+    padding:8px;
+    gap:8px;
+  }
+  .product-card .thumb{ width:60px; height:60px; border-radius:8px; }
+  .dots-logo .dot{ width:7px; height:7px; }
+  .title{ font-size:13px; }
+}
+
+/* Móvil más pequeño */
+@media (max-width:480px){
+  .product-card{ grid-template-columns:56px 1fr; padding:6px; gap:8px; }
+  .product-card .thumb{ width:56px; height:56px; }
+  .dots-logo .dot{ width:6px; height:6px; }
+  .title{ font-size:12px; }
+  .provider, .reviews, .prices { font-size:12px; }
+}
+
+/* Accesibilidad / pequeños ajustes */
+a,button,input{ font-family:inherit; }
