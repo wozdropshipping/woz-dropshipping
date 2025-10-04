@@ -15,13 +15,16 @@
         <span class="dot blue"></span>
       </div>
       <div class="brand-text">
-        <div class="title">Woz</div>
-        <div class="subtitle">Dropshipping</div>
+        <div class="title">Woz Dropshipping</div>
       </div>
     </div>
 
     <div class="search-area">
       <input id="searchInput" placeholder="¿Qué productos estás buscando?" />
+      <!-- NUEVO: Botón de búsqueda -->
+      <button id="searchButton" class="search-btn" aria-label="Buscar">
+        🔍
+      </button>
     </div>
   </header>
 
@@ -33,7 +36,7 @@
         <small id="dropper-note">Estos droppers están viendo estos productos</small>
       </div>
 
-      <!-- --- AQUI: Droppers por país (restaurado) --- -->
+      <!-- --- Droppers por país --- -->
       <div class="dropper-region">
         <div class="region-title">Droppers por país</div>
         <ul class="region-list">
@@ -48,6 +51,7 @@
       </div>
       <!-- --- fin dropper-region --- -->
 
+      <!-- Filtros originales -->
       <div class="filters">
         <select id="sortSelect">
           <option value="relevance">Más relevantes</option>
@@ -75,7 +79,15 @@
 
         <button id="clearFilters" title="Limpiar filtros">🖋</button>
       </div>
+
+      <!-- NUEVO: Botón responsive de filtros -->
+      <button id="mobileFiltersToggle" class="mobile-filters-btn" aria-label="Mostrar filtros">
+        &#128269; Filtros
+      </button>
     </section>
+
+    <!-- NUEVO: Título antes de la lista -->
+    <h2 class="section-title">Productos Woz Dropshipping</h2>
 
     <section id="productList" class="product-list" aria-live="polite"></section>
 
@@ -102,7 +114,7 @@
         </div>
 
         <div class="prices">
-          <div class="provider-price">Precio proveedor: <span class="price-provider"></span></div><br>
+          <div class="provider-price">Precio proveedor: <span class="price-provider"></span></div>
           <div class="suggested-price">Precio sugerido: <strong class="price-suggested"></strong></div>
         </div>
 
