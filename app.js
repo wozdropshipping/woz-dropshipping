@@ -1,4 +1,4 @@
-/* app.js - Woz Dropshipping v2 */
+/* app.js - Woz Dropshipping v3 (filtros corregidos y optimizados) */
 const productListEl = document.getElementById('productList');
 const productTemplate = document.getElementById('productTemplate');
 const searchInput = document.getElementById('searchInput');
@@ -16,17 +16,15 @@ let BATCH = 20;
 let appended = 0;
 let MAX_PRODUCTS = 500;
 
-/* Formato de moneda */
+/* ----------- Utils ----------- */
 function formatGs(n){
   const num = Math.round(Number(n) || 0);
   return 'Gs. ' + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
-
-/* Generador aleatorio */
 function randInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
 function pick(arr){ return arr[randInt(0,arr.length-1)]; }
 
-/* Datos base */
+/* ----------- Datos base ----------- */
 const adjectives = ["Compacto","Ligero","Premium","Plegable","Moderno","Urban","Pro","Deluxe","Económico","Ergonómico","Seguro","Infantil","Multiuso","Resistente"];
 const items = ["Carrito para bebé","Silla de bebe","Casco urbano","Luces LED para bici","Candado de cable","Mochila porta-niños","Alforja","Soporte celular para bici","Guardabarros","Portaequipaje","Timbrillo eléctrico","Manubrio plegable","Asiento gel","Bomba portátil","Guantes urbanos","Lentes fotocromáticos","Portabotellas","Cubierta antipinchazos","Cesta para bici","Pantalón reflectante"];
 const providers = [
@@ -42,7 +40,7 @@ const providers = [
   {name:"GlobalTrade",country:"internacional"}
 ];
 
-/* Generar productos */
+/* ----------- Generar productos ----------- */
 function generateProducts(){
   const arr=[];
   for(let i=1;i<=MAX_PRODUCTS;i++){
@@ -71,7 +69,7 @@ function generateProducts(){
   return arr;
 }
 
-/* Rellenar filtro de proveedores */
+/* ----------- Filtros dinámicos ----------- */
 function fillProviderFilter(){
   const set = new Set(PRODUCTS.map(p=>p.provider));
   const entries = Array.from(set).sort();
@@ -79,7 +77,7 @@ function fillProviderFilter(){
     entries.map(e=>`<option value="${e}">${e}</option>`).join('');
 }
 
-/* Render individual */
+/* ----------- Render producto ----------- */
 function renderProduct(p){
   const tpl = productTemplate.content.cloneNode(true);
   const card = tpl.querySelector('.product-card');
@@ -97,18 +95,18 @@ function renderProduct(p){
   const starsEl = tpl.querySelector('.stars');
   starsEl.innerHTML = generateStars(p.rating);
 
-  /* 🔥 NUEVOS CAMPOS */
+  /* Extra */
   const soldEl = tpl.querySelector('.sold-count');
   if (soldEl) soldEl.textContent = `Este producto se ha vendido ${randInt(200, 15000)} veces`;
 
-const profitabilityEl = tpl.querySelector('.profitability');
-if (p.priceSuggested > p.priceProvider * 1.8) {
-  profitabilityEl.textContent = "Alta rentabilidad";
-  profitabilityEl.className = "profitability high";
-} else {
-  profitabilityEl.textContent = "Rentabilidad regular";
-  profitabilityEl.className = "profitability regular";
-}
+  const profitabilityEl = tpl.querySelector('.profitability');
+  if (p.priceSuggested > p.priceProvider * 1.8) {
+    profitabilityEl.textContent = "Alta rentabilidad";
+    profitabilityEl.className = "profitability high";
+  } else {
+    profitabilityEl.textContent = "Rentabilidad regular";
+    profitabilityEl.className = "profitability regular";
+  }
 
   productListEl.appendChild(tpl);
 }
@@ -121,7 +119,7 @@ function renderBatch(){
   loadingEl.style.display = appended >= VISIBLE.length ? 'none' : 'block';
 }
 
-/* Estrellas SVG */
+/* ----------- Estrellas ----------- */
 function generateStars(r){
   const full = Math.floor(r);
   let html = '';
@@ -134,7 +132,7 @@ function generateStars(r){
   return html;
 }
 
-/* Filtros */
+/* ----------- Aplicar filtros ----------- */
 function applyFilters(){
   const q = searchInput.value.trim().toLowerCase();
   const sortVal = sortSelect.value;
@@ -146,7 +144,7 @@ function applyFilters(){
     if(q && !p.title.toLowerCase().includes(q)) return false;
     if(countryVal !== 'all' && p.providerCountry !== countryVal) return false;
     if(provVal !== 'all' && p.provider !== provVal) return false;
-    if(ratingVal !== 'all' && Math.floor(p.rating) < Number(ratingVal)) return false;
+    if(ratingVal !== 'all' && p.rating < Number(ratingVal)) return false;
     return true;
   });
 
@@ -160,19 +158,20 @@ function applyFilters(){
   renderBatch();
 }
 
-/* Scroll infinito */
+/* ----------- Scroll infinito ----------- */
 window.addEventListener('scroll', () => {
   if(appended >= VISIBLE.length) return;
   const nearBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 600);
   if(nearBottom) renderBatch();
 });
 
-/* Eventos */
-searchInput.addEventListener('keyup', e => { if(e.key === 'Enter') applyFilters(); });
+/* ----------- Eventos ----------- */
+searchInput.addEventListener('input', applyFilters);  // 🔥 ahora busca en tiempo real
 sortSelect.addEventListener('change', applyFilters);
 countryFilter.addEventListener('change', applyFilters);
 providerFilter.addEventListener('change', applyFilters);
 ratingFilter.addEventListener('change', applyFilters);
+
 clearFiltersBtn.addEventListener('click', () => {
   searchInput.value='';
   sortSelect.value='relevance';
@@ -182,12 +181,12 @@ clearFiltersBtn.addEventListener('click', () => {
   applyFilters();
 });
 
-/* Droppers en tiempo real */
+/* ----------- Droppers dinámicos ----------- */
 let currentTotal = 34305;
 let targetTotal = 10000000000034305;
 
 function startDroppersClock(){
-  // Actualiza droppers individuales cada 2500ms
+  // Actualiza droppers individuales
   setInterval(() => {
     PRODUCTS.forEach(p => {
       const change = randInt(0, 8) * p.droppersDir;
@@ -204,22 +203,17 @@ function startDroppersClock(){
     targetTotal = PRODUCTS.reduce((sum, p) => sum + p.droppers, 0);
   }, 2500);
 
-  // Animación suave del contador global
+  // Contador global
   setInterval(() => {
     if (currentTotal === targetTotal) return;
     currentTotal += (currentTotal < targetTotal) ? 1 : -1;
     globalDroppersEl.textContent = currentTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   }, 2500);
 
-  // Contador por país
+  // Contador por región
   const regionCounts = {
-    py: 12350,
-    ar: 105098,
-    br: 89420,
-    cl: 42880,
-    uy: 15230,
-    pe: 67110,
-    co: 78900
+    py: 12350, ar: 105098, br: 89420,
+    cl: 42880, uy: 15230, pe: 67110, co: 78900
   };
 
   setInterval(() => {
@@ -233,11 +227,12 @@ function startDroppersClock(){
     }
   }, 1000);
 }
+
+/* ----------- Init ----------- */
 function init(){
   PRODUCTS = generateProducts();
   fillProviderFilter();
   applyFilters();
   startDroppersClock();
 }
-
 init();
