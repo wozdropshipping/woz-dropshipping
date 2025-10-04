@@ -327,6 +327,34 @@ main{
   .provider,.sold-count{color:var(--blue)}
   .reviews,.droppers .user-icon{display:none}
 }
+/* --- Vista por defecto (desktop) --- */
+.topbar {
+  display: flex;
+  flex-direction: row;   /* Logo y buscador en fila */
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+/* --- Para móviles (max 768px) --- */
+@media (max-width: 768px) {
+  .topbar {
+    flex-direction: column;   /* Logo arriba, buscador abajo */
+    align-items: center;      /* Centrado */
+    gap: 15px;                /* Espacio entre logo y buscador */
+  }
+
+  .search-area {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Para que el input quede centrado */
+  }
+
+  .search-area input {
+    width: 90%;               /* Ocupa casi todo el ancho del móvil */
+    max-width: 400px;         /* límite para no hacerlo gigante */
+  }
+}
 
 
 
