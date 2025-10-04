@@ -37,7 +37,7 @@ body{
   flex-wrap:wrap;
   align-items:center;
   justify-content:space-between;
-  padding:30px 20px;  /* ⬅️ duplicamos el espacio vertical */
+  padding:30px 20px;  /* 皙�鏝� duplicamos el espacio vertical */
   border-bottom:1px solid rgba(0,0,0,0.08);
   box-shadow:0 2px 6px rgba(0,0,0,0.04);
   position:sticky;
@@ -52,7 +52,7 @@ body{
 .logo-dots .blue{background:var(--blue)}
 .brand-text {
   display: flex;
-  flex-direction: column; /* primero Woz+dots, después Dropshipping */
+  flex-direction: column; /* primero Woz+dots, despu辿s Dropshipping */
   align-items: flex-start; /* pegado a la izquierda */
 }
 
@@ -66,9 +66,9 @@ body{
 }
 
 .brand-text .subtitle {
-  font-weight: 700;
-  font-size: 16px;
-  color: var(--accent);
+  font-weight: 900;
+  font-size: clamp(18px,2.5vw,26px);
+  color: var(--navy);
   margin-top: 2px;
 }
 
@@ -150,14 +150,14 @@ main{
   margin-top: 6px;
 }
 
-/* Droppers por país */
+/* Droppers por pa鱈s */
 .dropper-region {
   background: #fff;
   border-radius: 12px;
   padding: 12px 14px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-  flex: 1 1 100%;   /* 🔑 Se expande en todo el ancho */
-  min-width: unset; /* 🔑 Quitamos el límite de 240px */
+  flex: 1 1 100%;   /* ��� Se expande en todo el ancho */
+  min-width: unset; /* ��� Quitamos el l鱈mite de 240px */
 }
 .region-title {
   font-weight: 700;
@@ -233,9 +233,9 @@ main{
 /* ============ PRODUCTOS ============ */
 .section-title{
   font-size:18px;
-  font-weight:700;
-  margin:14px 0 10px;
-  color:var(--navy);
+  font-weight:500;
+  margin:10px 0 10px;
+  color:var(--blue);
 }
 .product-list{
   display:grid;
@@ -336,12 +336,12 @@ main{
   padding: 10px 20px;
 }
 
-/* --- Para móviles (max 768px) --- */
+/* --- Para m坦viles (max 768px) --- */
 @media (max-width: 768px) {
   .topbar {
     flex-direction: column;   /* Logo arriba, buscador abajo */
     align-items: center;      /* Centrado */
-    gap: 15px;                /* Espacio entre logo y buscador */
+    gap: 10px;                /* Espacio entre logo y buscador */
   }
 
   .search-area {
@@ -351,12 +351,8 @@ main{
   }
 
   .search-area input {
-    width: 90%;               /* Ocupa casi todo el ancho del móvil */
-    max-width: 400px;         /* límite para no hacerlo gigante */
+    width: 90%;               /* Ocupa casi todo el ancho del m坦vil */
+    max-width: 400px;         /* l鱈mite para no hacerlo gigante */
   }
 }
-
-
-
-
 
