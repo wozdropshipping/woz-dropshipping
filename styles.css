@@ -50,7 +50,27 @@ body{
 .logo-dots .green{background:var(--green)}
 .logo-dots .navy{background:var(--navy)}
 .logo-dots .blue{background:var(--blue)}
-.brand-text .title{font-weight:900;font-size:clamp(18px,2.5vw,26px);color:var(--navy)}
+.brand-text {
+  display: flex;
+  flex-direction: column; /* primero Woz+dots, después Dropshipping */
+  align-items: flex-start; /* pegado a la izquierda */
+}
+
+.brand-text .title {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* espacio entre Woz y los puntitos */
+  font-weight: 900;
+  font-size: clamp(18px,2.5vw,26px);
+  color: var(--navy);
+}
+
+.brand-text .subtitle {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--accent);
+  margin-top: 2px;
+}
 
 /* Buscador moderno */
 .search-area{
@@ -307,6 +327,7 @@ main{
   .provider,.sold-count{color:var(--blue)}
   .reviews,.droppers .user-icon{display:none}
 }
+
 
 
 
