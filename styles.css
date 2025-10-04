@@ -32,12 +32,12 @@ body{
 main{max-width:var(--container);margin:0 auto;padding:18px}
 
 /* Topbar */
-.topbar{
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  gap:6px;          /* menos espacio */
-  padding:6px 0;    /* menos alto */
+.topbar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 20px 0 6px 0; /* arriba 20px, derecha 0, abajo 6px, izquierda 0 */
 }
 .brand{display:flex;align-items:center;gap:8px;min-width:0}
 .logo-dots{display:flex;gap:6px;align-items:center;flex-shrink:0}
@@ -217,3 +217,4 @@ main{max-width:var(--container);margin:0 auto;padding:18px}
   fill: var(--muted);
   opacity: 0.8;
 }
+
