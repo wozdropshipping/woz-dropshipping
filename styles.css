@@ -233,8 +233,8 @@ main{
 /* ============ PRODUCTOS ============ */
 .section-title{
   font-size:18px;
-  font-weight:500;
-  margin:10px 0 10px;
+  font-weight:700;
+  margin:14px 0 10px;
   color:var(--blue);
 }
 .product-list{
@@ -341,7 +341,7 @@ main{
   .topbar {
     flex-direction: column;   /* Logo arriba, buscador abajo */
     align-items: center;      /* Centrado */
-    gap: 10px;                /* Espacio entre logo y buscador */
+    gap: 15px;                /* Espacio entre logo y buscador */
   }
 
   .search-area {
