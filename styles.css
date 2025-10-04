@@ -217,4 +217,10 @@ main{max-width:var(--container);margin:0 auto;padding:18px}
   fill: var(--muted);
   opacity: 0.8;
 }
+@media (max-width: 768px) {
+  .brand {
+    margin-top: 20px !important;
+  }
+}
+
 
