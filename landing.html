@@ -17,12 +17,14 @@
     <p>Woz Dropshipping es un modelo de emprendimiento digital que te permite vender productos nacionales e internacionales sin tener inventario. Nosotros gestionamos la logística, los envíos y el soporte, mientras vos generás ingresos pasivos.</p>
     <p>Somos líderes en Paraguay con más de <strong>6.500.000 Gs</strong> en ventas mensuales. Nuestro sistema semi automatizado y tráfico orgánico hacen que las ventas fluyan naturalmente.</p>
   </div>
-    <div class="buttons">
-      <button>"Registrate"<a> href= "https://"wozpayments.com/"target="_blank"></button></a>
-      <button>Iniciá sesión</button><a> href= "https://"wozpayments.com/</a>
-      <button>Ver catálogo</button><a> href= "index.html"</a>
-      <button>Ver tutorial</button>
-    </div
+  <div class="buttons">
+   <a href="https://wozpayments.com/register" class="btn">Registrate ya</a>
+   <a href="https://wozpayments.com/login" class="btn">Inicia sesión</a>
+   <a href="index.html" class="btn">Ver catálogo</a>
+   <a href="https://wa.me/595983994268" class="btn">Adquirir membresía</a>
+   <a href="https://wa.me/595983994268" class="btn">Chatea con un vendedor</a>
+
+  </div>
 </section>
 
 <section class="section">
@@ -66,22 +68,22 @@
   <div class="card">
     <h3>Principiante - 50.000 Gs</h3>
     <p>Probá el sistema por 24 hs, ideal para quienes inician.</p>
-    <button>Adquirir membresía</button><a> href= "https://wa.me/595974141073"</a>
+    <button>Adquirir membresía</button>
   </div>
   <div class="card">
     <h3>Medio - 80.000 Gs semanal</h3>
     <p>Perfecto si ya conocés el mercado y querés escalar.</p>
-    <button>Adquirir membresía</button><a> href= "https://wa.me/595974141073"</a>
+    <button>Adquirir membresía</button>
   </div>
   <div class="card">
     <h3>Avanzado - 180.000 Gs mensual</h3>
     <p>Para usuarios expertos que dominan nuestro sistema.</p>
-    <button>Adquirir membresía</button><a> href= "https://wa.me/595974141073"</a>
+    <button>Adquirir membresía</button>
   </div>
   <div class="promo">
     <h3>Promoción anual - 250.000 Gs</h3>
     <p>Exclusiva para nuevos clientes. ¡Aprovechá y asegurá tu año completo!</p>
-    <button>Adquirir membresía</button><a> href= "https://wa.me/595974141073"</a>
+    <button>Adquirir membresía</button>
   </div>
 </section>
 
@@ -127,7 +129,7 @@
   <div class="faq-item"><h4>¿Qué hago si tengo dudas?</h4><p>Chateá con un vendedor por WhatsApp.</p></div>
 </section>
 
-<div class="floating-whatsapp">💬 Chateá con un vendedor</div><a> href= "https://wa.me/595974141073"</a>
+<div class="floating-whatsapp">💬 Chateá con un vendedor</div>
 
 <script>
   // Carrusel automático
@@ -141,6 +143,23 @@
       scrollAmount = 0;
     }
   }, 3000);
+</script>
+<script>
+  document.getElementById("btnRegistro").onclick = function() {
+    window.location.href = "https://wozpayments.com/register";
+  };
+
+  document.getElementById("btnLogin").onclick = function() {
+    window.location.href = "https://wozpayments.com/login";
+  };
+
+  document.getElementById("btnCatalogo").onclick = function() {
+    window.location.href = "index.html";
+  };
+
+  document.getElementById("btnTutorial").onclick = function() {
+    window.location.href = "https://wa.me/595983994268";
+  };
 </script>
 
 </body>
