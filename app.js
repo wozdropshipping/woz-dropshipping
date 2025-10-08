@@ -333,4 +333,30 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   init();
+
+  // Abrir modal al hacer click en "Vender este producto"
+  document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('vender-btn')) {
+      document.getElementById('venderModal').style.display = 'flex';
+    }
+    if (e.target.classList.contains('close')) {
+      document.getElementById('venderModal').style.display = 'none';
+    }
+  });
+
+  // Cerrar modal al hacer click fuera del contenido
+  document.getElementById('venderModal').addEventListener('click', function(e) {
+    if (e.target === this) this.style.display = 'none';
+  });
+
+  document.getElementById('mobileFiltersToggle').addEventListener('click', function() {
+    const filters = document.querySelector('.filters');
+    if (filters.style.display === 'flex') {
+      filters.style.display = 'none';
+    } else {
+      filters.style.display = 'flex';
+      filters.style.flexWrap = 'wrap';
+    }
+  });
 });
+
