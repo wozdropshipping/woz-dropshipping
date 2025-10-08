@@ -8,17 +8,23 @@
 </head>
 <body>
   <header class="topbar">
-<div class="brand">
-  <div class="brand-text">
-    <span class="title">Woz<br>
-    Dropshipping</span><br>
-    <span class="logo-dots">
-      <span class="dot green"></span>
-      <span class="dot navy"></span>
-      <span class="dot blue"></span>
+    <div class="brand">
+      <div class="logo-dots" aria-hidden="true">
+        <span class="dot green"></span>
+        <span class="dot navy"></span>
+        <span class="dot blue"></span>
+      </div>
+      <div class="brand-text">
+        <div class="title">Woz Dropshipping</div>
+      </div>
     </div>
+
     <div class="search-area">
-      <input id="searchInput" placeholder="Buscar productos" />
+      <input id="searchInput" placeholder="¿Qué productos estás buscando?" />
+      <!-- NUEVO: Botón de búsqueda -->
+      <button id="searchButton" class="search-btn" aria-label="Buscar">
+        🔍
+      </button>
     </div>
   </header>
 
@@ -47,6 +53,7 @@
 
       <!-- Filtros originales -->
       <div class="filters">
+        <span class="filtros-label">Filtros</span>
         <select id="sortSelect">
           <option value="relevance">Más relevantes</option>
           <option value="price_low">Precio: más bajo</option>
@@ -91,37 +98,24 @@
   <!-- TEMPLATE DE PRODUCTO -->
   <template id="productTemplate">
     <div class="product-card">
-      <div class="thumb">
-        <div class="dots-logo">
-          <span class="dot green"></span>
-          <span class="dot navy"></span>
-          <span class="dot blue"></span>
-        </div>
-      </div>
-
       <div class="info">
         <h2 class="title"></h2>
-
         <div class="provider">
           <span class="provider-name"></span>
           <span class="verified" title="Proveedor verificado">✔︎</span>
         </div>
-
         <div class="prices">
           <div class="provider-price">Precio proveedor: <span class="price-provider"></span></div>
           <div class="suggested-price">Precio sugerido: <strong class="price-suggested"></strong></div>
         </div>
-
         <div class="rating">
           <span class="stars"></span>
           <span class="reviews"></span>
         </div>
-
         <div class="extra-info">
           <div class="sold-count"></div>
           <div class="profitability"></div>
         </div>
-
         <div class="droppers">
           <svg class="user-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
             <path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z"/>
@@ -129,9 +123,50 @@
           <span class="droppers-count"></span>
         </div>
       </div>
+      <button class="vender-btn">Vender este producto</button>
     </div>
   </template>
   <!-- FIN TEMPLATE -->
+
+  <!-- Modal para vender producto -->
+  <div id="venderModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="modal-title">
+          Woz<br>
+          Marketplace
+        </span>
+        <span class="close">&times;</span>
+      </div>
+      <form id="venderForm" class="modal-form">
+        <div class="form-group">
+          <label>Nombre del vendedor</label>
+          <input type="text" name="nombre" required />
+        </div>
+        <div class="form-group">
+          <label>Precio</label>
+          <input type="number" name="precio" required />
+        </div>
+        <div class="form-group">
+          <label>WhatsApp</label>
+          <input type="text" name="whatsapp" required />
+        </div>
+        <div class="form-group">
+          <label>Imágenes</label>
+          <input type="file" name="imagenes" id="fileInput" style="display:none;" multiple />
+          <button type="button" class="file-btn" onclick="document.getElementById('fileInput').click()">
+            <svg width="22" height="22" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+            <span class="file-btn-label">Seleccionar archivo</span>
+          </button>
+        </div>
+        <div class="form-group">
+          <label>Descripción</label>
+          <textarea name="descripcion" required></textarea>
+        </div>
+        <button type="submit" class="publicar-btn">Publicar en Woz Marketplace</button>
+      </form>
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>
