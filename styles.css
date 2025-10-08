@@ -37,7 +37,7 @@ body{
   flex-wrap:wrap;
   align-items:center;
   justify-content:space-between;
-  padding:30px 20px;  /* 皙�鏝� duplicamos el espacio vertical */
+  padding:24px 20px;  /* ⬅️ duplicamos el espacio vertical */
   border-bottom:1px solid rgba(0,0,0,0.08);
   box-shadow:0 2px 6px rgba(0,0,0,0.04);
   position:sticky;
@@ -50,27 +50,7 @@ body{
 .logo-dots .green{background:var(--green)}
 .logo-dots .navy{background:var(--navy)}
 .logo-dots .blue{background:var(--blue)}
-.brand-text {
-  display: flex;
-  flex-direction: column; /* primero Woz+dots, despu辿s Dropshipping */
-  align-items: flex-start; /* pegado a la izquierda */
-}
-
-.brand-text .title {
-  display: flex;
-  align-items: center;
-  gap: 8px; /* espacio entre Woz y los puntitos */
-  font-weight: 900;
-  font-size: clamp(18px,2.5vw,26px);
-  color: var(--navy);
-}
-
-.brand-text .subtitle {
-  font-weight: 900;
-  font-size: clamp(18px,2.5vw,26px);
-  color: var(--navy);
-  margin-top: 2px;
-}
+.brand-text .title{font-weight:900;font-size:clamp(18px,2.5vw,26px);color:var(--navy)}
 
 /* Buscador moderno */
 .search-area{
@@ -94,19 +74,8 @@ body{
   color:#333;
 }
 .search-area .search-btn{
-  background:var(--blue);
-  color:#fff;
-  border:none;
-  border-radius:50%;
-  width:34px;
-  height:34px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  transition:background 0.2s;
+  display: none !important;
 }
-.search-area .search-btn:hover{background:#1a5f8a}
 
 /* ============ CONTENIDO ============ */
 main{
@@ -150,14 +119,14 @@ main{
   margin-top: 6px;
 }
 
-/* Droppers por pa鱈s */
+/* Droppers por país */
 .dropper-region {
   background: #fff;
   border-radius: 12px;
   padding: 12px 14px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-  flex: 1 1 100%;   /* ��� Se expande en todo el ancho */
-  min-width: unset; /* ��� Quitamos el l鱈mite de 240px */
+  flex: 1 1 100%;   /* 🔑 Se expande en todo el ancho */
+  min-width: unset; /* 🔑 Quitamos el límite de 240px */
 }
 .region-title {
   font-weight: 700;
@@ -222,12 +191,14 @@ main{
 .filters button{color:var(--blue)}
 
 .mobile-filters-btn{
-  display:none;
-  background:transparent;
-  color:var(--blue);
-  border:none;
-  font-size:14px;
-  cursor:pointer;
+  display: none !important;
+}
+
+.filtros-label {
+  color: #888;
+  font-size: 15px;
+  font-weight: 500;
+  margin-right: 10px;
 }
 
 /* ============ PRODUCTOS ============ */
@@ -235,7 +206,7 @@ main{
   font-size:18px;
   font-weight:700;
   margin:14px 0 10px;
-  color:var(--blue);
+  color:var(--navy);
 }
 .product-list{
   display:grid;
@@ -255,6 +226,17 @@ main{
   transition:transform 0.2s;
 }
 .product-card:hover{transform:translateY(-3px)}
+.product-card .prices {
+  display: flex;
+  flex-direction: column;
+  gap: 2px; /* Reduce el espacio vertical */
+  margin-bottom: 0.5em;
+}
+.product-card .provider-price,
+.product-card .suggested-price {
+  margin: 0;
+  padding: 0;
+}
 .thumb{
   width:88px;height:88px;border-radius:12px;background:#fff;
   display:flex;align-items:center;justify-content:center;overflow:hidden;
@@ -308,6 +290,10 @@ main{
 .sold-count{color:var(--navy)}
 .profitability.high{color:var(--green)}
 .profitability.regular{color:#444}
+.product-card .profitability {
+  color: #19d241; /* Azul */
+  font-weight: regular;
+}
 
 /* Loader */
 .loading{
@@ -327,32 +313,186 @@ main{
   .provider,.sold-count{color:var(--blue)}
   .reviews,.droppers .user-icon{display:none}
 }
-/* --- Vista por defecto (desktop) --- */
-.topbar {
+
+/* ============ MODALES ============ */
+.modal {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.5);
   display: flex;
-  flex-direction: row;   /* Logo y buscador en fila */
-  justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px; /* Añade padding para evitar que el modal toque los bordes */
+}
+.modal-header {
+  background: #27ae60;
+  color: #fff;
+  padding: 1.1em 1.2em 1.3em 1.2em;
+  border-radius: 12px 12px 0 0;
+  margin: -1.5em -1.5em 1.2em -1.5em;
+  min-height: 54px;
+  position: relative;
+  box-shadow: 0 2px 12px rgba(39,174,96,0.10);
+}
+.modal-header::after {
+  display: none;
+}
+.modal-content {
+  border-radius: 12px 12px 0 0;
+  overflow-y: visible;
+  max-height: none;
+}
+.modal-title {
+  font-size: 1.3em;
+  font-weight: 900;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+  text-align: left;
+  display: block;
+  white-space: pre-line;
+}
+.modal-content {
+  width: 100%;
+  max-width: 400px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 0 1.5em 1.5em 1.5em;
+  border-radius: 12px;
+  background: #fff;
+  position: relative;
+  box-sizing: border-box;
+  margin: 0 auto;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
 }
 
-/* --- Para m坦viles (max 768px) --- */
-@media (max-width: 768px) {
-  .topbar {
-    flex-direction: column;   /* Logo arriba, buscador abajo */
-    align-items: center;      /* Centrado */
-    gap: 15px;                /* Espacio entre logo y buscador */
-  }
+/* Formulario moderno con labels flotantes */
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+.form-group {
+  position: relative;
+  margin-bottom: 0.5em;
+}
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.7em 0.7em;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 6px;
+  background: #f3f3f3;
+  font-size: 0.97em;
+  outline: none;
+  transition: border 0.2s;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #27ae60;
+}
+.form-group label {
+  position: static;
+  left: unset;
+  top: unset;
+  color: #888;
+  font-size: 0.97em;
+  margin-bottom: 0.18em;
+  background: none;
+  padding: 0;
+  transition: none;
+  display: block;
+}
+.form-group input:focus + label,
+.form-group input:not(:placeholder-shown) + label,
+.form-group textarea:focus + label,
+.form-group textarea:not(:placeholder-shown) + label {
+  top: 0.3em;
+  left: 0.7em;
+  font-size: 0.85em;
+  color: #27ae60;
+  background: #fff;
+  padding: 0 0.2em;
+}
+.form-group input[type="file"] + label {
+  top: -1.5em;
+  left: 0;
+  font-size: 0.95em;
+  color: #888;
+  background: none;
+  padding: 0;
+}
 
-  .search-area {
-    width: 100%;
-    display: flex;
-    justify-content: center; /* Para que el input quede centrado */
-  }
+/* Botón publicar */
+.publicar-btn {
+  background: #27ae60;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.55em 0;
+  font-size: 1em;
+  font-weight: 400;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 0.7em;
+  transition: background 0.2s;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 8px rgba(39,174,96,0.10);
+}
+.publicar-btn:hover, .publicar-btn:focus {
+  background: #219150;
+}
+.vender-btn {
+  background: #27ae60;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.7em 0;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+  letter-spacing: 0.5px;
+  box-shadow: none;
+  transition: background 0.2s;
+  margin-top: 1em;
+}
+.vender-btn:hover, .vender-btn:focus {
+  background: #219150;
+}
+.file-btn {
+  background: none;
+  border: none;
+  padding: 0.2em 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  cursor: pointer;
+  color: #888;
+  font-size: 1em;
+}
+.file-btn-label {
+  color: #888;
+  font-size: 1em;
+  font-weight: 400;
+}
+.file-btn svg {
+  display: inline-block;
+  vertical-align: middle;
+}
 
-  .search-area input {
-    width: 90%;               /* Ocupa casi todo el ancho del m坦vil */
-    max-width: 400px;         /* l鱈mite para no hacerlo gigante */
+@media (max-width: 500px) {
+  .modal-content {
+    max-width: 98vw;
+    padding: 0 0.5em 1em 0.5em;
+    border-radius: 10px;
+  }
+  .modal-header {
+    margin: -0.5em -0.5em 1em -0.5em;
+    border-radius: 10px 10px 0 0;
+    padding: 1em 1em 1.2em 1em;
   }
 }
+
 
