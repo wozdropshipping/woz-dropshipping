@@ -32,7 +32,8 @@
     <section class="controls">
       <div class="dropper-box">
         <div class="dropper-label">Droppers</div>
-        <div class="dropper-count" id="globalDroppers">—</div>
+        <div class="dropper-count" id="globalDroppers"></div>
+<!-- Elimina el <span id="globalDroppersArrow"> de aquí -->
         <small id="dropper-note">Estos droppers están viendo estos productos</small>
       </div>
 
@@ -40,13 +41,49 @@
       <div class="dropper-region">
         <div class="region-title">Droppers por país</div>
         <ul class="region-list">
-          <li><strong>Paraguay:</strong> <span class="region-count" data-country="py">12.350</span></li>
-          <li><strong>Argentina:</strong> <span class="region-count" data-country="ar">105.098</span></li>
-          <li><strong>Brasil:</strong> <span class="region-count" data-country="br">89.420</span></li>
-          <li><strong>Chile:</strong> <span class="region-count" data-country="cl">42.880</span></li>
-          <li><strong>Uruguay:</strong> <span class="region-count" data-country="uy">15.230</span></li>
-          <li><strong>Perú:</strong> <span class="region-count" data-country="pe">67.110</span></li>
-          <li><strong>Colombia:</strong> <span class="region-count" data-country="co">78.900</span></li>
+          <li>
+            <strong>Paraguay:</strong>
+            <span class="region-count" data-country="py">
+              3.314
+              <span class="region-arrow"></span>
+            </span>
+          </li>
+          <li><strong>Argentina:</strong>
+            <span class="region-count" data-country="ar">
+              105.098
+              <span class="region-arrow"></span>
+            </span>
+          </li>
+          <li><strong>Brasil:</strong>
+            <span class="region-count" data-country="br">
+              89.420
+              <span class="region-arrow"></span>
+            </span>
+          </li>
+          <li><strong>Chile:</strong>
+            <span class="region-count" data-country="cl">
+              42.880
+              <span class="region-arrow"></span>
+            </span>
+          </li>
+          <li><strong>Uruguay:</strong>
+            <span class="region-count" data-country="uy">
+              15.230
+              <span class="region-arrow"></span>
+            </span>
+          </li>
+          <li><strong>Perú:</strong>
+            <span class="region-count" data-country="pe">
+              67.110
+              <span class="region-arrow"></span>
+            </span>
+          </li>
+          <li><strong>Colombia:</strong>
+            <span class="region-count" data-country="co">
+              78.900
+              <span class="region-arrow"></span>
+            </span>
+          </li>
         </ul>
       </div>
       <!-- --- fin dropper-region --- -->
@@ -129,45 +166,38 @@
   <!-- FIN TEMPLATE -->
 
   <!-- Modal para vender producto -->
-  <div id="venderModal" class="modal" style="display:none;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <span class="modal-title">
-          Woz<br>
-          Marketplace
-        </span>
-        <span class="close">&times;</span>
-      </div>
-      <form id="venderForm" class="modal-form">
-        <div class="form-group">
-          <label>Nombre del vendedor</label>
-          <input type="text" name="nombre" required />
-        </div>
-        <div class="form-group">
-          <label>Precio</label>
-          <input type="number" name="precio" required />
-        </div>
-        <div class="form-group">
-          <label>WhatsApp</label>
-          <input type="text" name="whatsapp" required />
-        </div>
-        <div class="form-group">
-          <label>Imágenes</label>
-          <input type="file" name="imagenes" id="fileInput" style="display:none;" multiple />
-          <button type="button" class="file-btn" onclick="document.getElementById('fileInput').click()">
-            <svg width="22" height="22" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
-            <span class="file-btn-label">Seleccionar archivo</span>
-          </button>
-        </div>
-        <div class="form-group">
-          <label>Descripción</label>
-          <textarea name="descripcion" required></textarea>
-        </div>
-        <button type="submit" class="publicar-btn">Publicar en Woz Marketplace</button>
-      </form>
+    <div id="venderModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:999;background:rgba(255,255,255,0.92);align-items:center;justify-content:center;">
+  <div class="modal-content" style="background:#fff;padding:32px 24px;border-radius:18px;max-width:480px;width:100%;box-shadow:0 4px 32px #0002;">
+    <div class="modal-header" style="display:flex;align-items:center;justify-content:space-between;">
+      <span class="modal-title" style="font-size:2em;font-weight:900;line-height:1.1;">
+        Woz<br>
+        <span style="font-size:1em;font-weight:900;letter-spacing:-1px;">Marketplace</span>
+      </span>
+      <button class="close-modal" style="font-size:1.5em;background:none;border:none;cursor:pointer;">&times;</button>
     </div>
+    <form>
+      <label>Nombre del vendedor</label>
+      <input type="text" class="input-woz" required style="width:100%;margin-bottom:10px;">
+      <label>Precio del vendedor</label>
+      <div style="position:relative;">
+  <span class="gs-prefix">Gs.</span>
+  <input type="text" class="input-woz" id="precioVendedor" inputmode="numeric" autocomplete="off">
+</div>
+      <div class="ayuda-precio">Ofrece un precio competitivo, recuerda que otros venden el mismo producto a un mejor precio</div>
+      <label>WhatsApp</label>
+      <input type="text" class="input-woz" required style="width:100%;margin-bottom:10px;">
+      <label>Descripción del producto</label>
+      <textarea class="input-woz" required style="width:100%;margin-bottom:10px;"></textarea>
+      <div style="margin:18px 0 6px 0;font-weight:600;">Diferenciate de la competencia</div>
+      <div style="font-size:1em;margin-bottom:2px;">Agrega una imagen propia por 1 USD</div>
+      <div style="font-size:0.98em;margin-bottom:10px;">Alias bancario 0983994268<br>Banco Sudameris Bank</div>
+      <button type="button" style="margin-bottom:8px;">Subir imagen del producto</button>
+      <button type="button" style="margin-bottom:8px;">Carga tu comprobante de transferencia</button>
+      <button type="submit" style="margin-top:18px;width:100%;background:#19c37d;color:#fff;padding:10px 0;border:none;border-radius:6px;font-size:1.1em;">Publicar en Marketplace</button>
+    </form>
   </div>
-
+  </div>
+</div>
   <script src="app.js"></script>
 </body>
 </html>
