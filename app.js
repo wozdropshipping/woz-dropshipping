@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function generateProducts(){
     const arr=[];
     for(let i=1;i<=MAX_PRODUCTS;i++){
-      const title = `${pick(adjectives)} ${pick(items)} ${i}`;
+      const title = `${pick(adjectives)} ${pick(items)}`; // Quitado el número
       const providerObj = pick(providers);
       const priceProvider = randInt(20000, 900000);
       const markup = randInt(120, 260) / 100;
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         id: i,
         title,
         provider: providerObj.name,
-        providerVerified: Math.random() > 0.25,
+        providerVerified: true, // Siempre true
         providerCountry: providerObj.country,
         priceProvider,
         priceSuggested,
@@ -108,7 +108,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (providerEl) providerEl.textContent = p.provider;
 
       const verifiedEl = tpl.querySelector('.verified');
-      if (verifiedEl) verifiedEl.style.display = p.providerVerified ? '' : 'none';
+      if (verifiedEl) {
+        verifiedEl.style.display = p.providerVerified ? '' : 'none';
+        verifiedEl.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#3897f0"/><path d="M17 8l-6.5 7L7 11.5" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+      }
 
       const priceProvEl = tpl.querySelector('.price-provider');
       if (priceProvEl) priceProvEl.textContent = formatGs(p.priceProvider);
@@ -126,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (starsEl) starsEl.innerHTML = generateStars(p.rating);
 
       const soldEl = tpl.querySelector('.sold-count');
-      if (soldEl) soldEl.textContent = `Este producto se ha vendido ${randInt(200, 15000)} veces`;
+      if (soldEl) soldEl.textContent = `Este producto se ha vendido ${randInt(10, 300).toLocaleString('de-DE')} veces`;
 
       const profitabilityEl = tpl.querySelector('.profitability');
       if (profitabilityEl) {
@@ -270,57 +273,89 @@ document.addEventListener('DOMContentLoaded', () => {
   } else log('clearFiltersBtn no encontrado');
 
   /* ---------- Droppers (simulación) ---------- */
-  let currentTotal = 34305;
-  let targetTotal = 10000000000034305;
+  let currentTotal = 1093029; // Cambiado el inicio
+  let targetTotal = 1093029;  // Igual al inicio
+  let lastTotal = currentTotal; // Para comparar subida/bajada
 
-  function startDroppersClock(){
-    // Actualiza droppers individuales cada 2500ms
-    setInterval(() => {
-      PRODUCTS.forEach(p => {
-        const change = randInt(0, 8) * p.droppersDir;
-        p.droppers = Math.max(0, p.droppers + change);
-        if (Math.random() < 0.02) p.droppersDir *= -1;
-
-        const card = document.querySelector(`.product-card[data-id="${p.id}"]`);
-        if (card) {
-          const dEl = card.querySelector('.droppers-count');
-          if (dEl) dEl.textContent = p.droppers;
-        }
-      });
-
-      targetTotal = PRODUCTS.reduce((sum, p) => sum + p.droppers, 0);
-    }, 2500);
-
-    // Animación suave del contador global
-    setInterval(() => {
-      if (!globalDroppersEl) return;
-      if (currentTotal === targetTotal) return;
-      currentTotal += (currentTotal < targetTotal) ? 1 : -1;
-      globalDroppersEl.textContent = currentTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    }, 2500);
-
-    // Contador por país
-    const regionCounts = {
-      py: 12350,
-      ar: 105098,
-      br: 89420,
-      cl: 42880,
-      uy: 15230,
-      pe: 67110,
-      co: 78900
-    };
-
-    setInterval(() => {
-      for (const key in regionCounts) {
-        const change = randInt(-3, 3);
-        regionCounts[key] = Math.max(0, regionCounts[key] + change);
-        const el = document.querySelector(`.region-count[data-country="${key}"]`);
-        if (el) {
-          el.textContent = regionCounts[key].toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-        }
-      }
-    }, 1000);
+  function renderGlobalDroppers(isUp) {
+    if (!globalDroppersEl) return;
+    globalDroppersEl.innerHTML =
+      currentTotal.toLocaleString('de-DE') +
+      (isUp
+        ? `<span class="big-arrow" style="margin-left:4px;display:inline-block;vertical-align:middle;">
+            <svg width="22" height="22" viewBox="0 0 24 24"><path d="M12 4l6 8h-4v8h-4v-8H6z" fill="#19c37d" stroke="#19c37d" stroke-width="3"/></svg>
+          </span>`
+        : `<span class="big-arrow" style="margin-left:4px;display:inline-block;vertical-align:middle;">
+            <svg width="22" height="22" viewBox="0 0 24 24"><path d="M12 20l-6-8h4V4h4v8h4z" fill="#e74c3c" stroke="#e74c3c" stroke-width="3"/></svg>
+          </span>`);
   }
+
+  // Reemplaza el setInterval de globalDroppers por este:
+  setInterval(() => {
+    if (!globalDroppersEl) return;
+    if (currentTotal === targetTotal) return;
+    let isUp = currentTotal < targetTotal;
+    currentTotal += isUp ? randInt(10, 200) : -randInt(10, 200);
+    if (currentTotal < 0) currentTotal = 0;
+    renderGlobalDroppers(isUp);
+    lastTotal = currentTotal;
+  }, 1200);
+
+  // Actualiza droppers individuales cada 2500ms
+  setInterval(() => {
+    PRODUCTS.forEach(p => {
+      const change = randInt(0, 8) * p.droppersDir;
+      p.droppers = Math.max(0, p.droppers + change);
+      if (Math.random() < 0.02) p.droppersDir *= -1;
+
+      const card = document.querySelector(`.product-card[data-id="${p.id}"]`);
+      if (card) {
+        const dEl = card.querySelector('.droppers-count');
+        if (dEl) dEl.textContent = p.droppers;
+      }
+    });
+
+    targetTotal = PRODUCTS.reduce((sum, p) => sum + p.droppers, 0);
+  }, 2500);
+
+  // Contador por país
+  const regionCounts = {
+    py: randInt(100, 8000),
+    ar: randInt(200, 9000),
+    br: randInt(200, 9000),
+    cl: randInt(100, 8000),
+    uy: randInt(100, 8000),
+    pe: randInt(100, 8000),
+    co: randInt(100, 8000)
+  };
+  const regionLast = {...regionCounts};
+
+  function updateRegionArrow(key, isUp) {
+    let el = document.querySelector(`.region-count[data-country="${key}"]`);
+    if (!el) return;
+    let arrow = el.querySelector('.region-arrow');
+    if (!arrow) {
+      arrow = document.createElement('span');
+      arrow.className = 'region-arrow big-arrow';
+      el.appendChild(arrow);
+    }
+    arrow.innerHTML = isUp
+      ? `<svg width="18" height="18" style="vertical-align:middle;" viewBox="0 0 24 24"><path d="M12 4l6 8h-4v8h-4v-8H6z" fill="#19c37d" stroke="#19c37d" stroke-width="3"/></svg>`
+      : `<svg width="18" height="18" style="vertical-align:middle;" viewBox="0 0 24 24"><path d="M12 20l-6-8h4V4h4v8h4z" fill="#e74c3c" stroke="#e74c3c" stroke-width="3"/></svg>`;
+  }
+
+  setInterval(() => {
+    for (const key in regionCounts) {
+      const change = randInt(-800, 800); // Más volátil pero realista
+      regionCounts[key] = Math.max(0, regionCounts[key] + change);
+      const el = document.querySelector(`.region-count[data-country="${key}"]`);
+      if (el) {
+        el.textContent = regionCounts[key].toLocaleString('de-DE');
+        updateRegionArrow(key, change >= 0);
+      }
+      regionLast[key] = regionCounts[key];
+    }
+  }, 1200);
 
   /* ---------- Init ---------- */
   function init(){
@@ -328,26 +363,27 @@ document.addEventListener('DOMContentLoaded', () => {
     PRODUCTS = generateProducts();
     fillProviderFilter();
     applyFilters();
-    startDroppersClock();
     log('init -> listo');
   }
 
   init();
 
-  // Abrir modal al hacer click en "Vender este producto"
-  document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('vender-btn')) {
-      document.getElementById('venderModal').style.display = 'flex';
-    }
-    if (e.target.classList.contains('close')) {
-      document.getElementById('venderModal').style.display = 'none';
-    }
-  });
+  // Solo agrega este bloque si el modal existe
+  const venderModal = document.getElementById('venderModal');
+  if (venderModal) {
+    document.addEventListener('click', function(e) {
+      if (e.target.classList.contains('vender-btn')) {
+        venderModal.style.display = 'flex';
+      }
+      if (e.target.classList.contains('close-modal')) {
+        venderModal.style.display = 'none';
+      }
+    });
 
-  // Cerrar modal al hacer click fuera del contenido
-  document.getElementById('venderModal').addEventListener('click', function(e) {
-    if (e.target === this) this.style.display = 'none';
-  });
+    venderModal.addEventListener('click', function(e) {
+      if (e.target === this) this.style.display = 'none';
+    });
+  }
 
   document.getElementById('mobileFiltersToggle').addEventListener('click', function() {
     const filters = document.querySelector('.filters');
@@ -359,4 +395,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
-
+document.addEventListener('input', function(e) {
+  if (e.target && e.target.id === 'precioVendedor') {
+    let val = e.target.value.replace(/\D/g, '');
+    if (val) {
+      e.target.value = Number(val).toLocaleString('de-DE');
+    } else {
+      e.target.value = '';
+    }
+  }
+});
