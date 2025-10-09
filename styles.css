@@ -108,10 +108,12 @@ main{
   font-size: 14px;
 }
 .dropper-count {
-  font-size: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 2em;
   font-weight: 900;
-  margin-top: 6px;
-  color: var(--navy);
+  color: #ff9800; /* o el color anaranjado que uses */
+  gap: 6px;
 }
 .dropper-box small {
   color: var(--muted);
@@ -158,17 +160,30 @@ main{
   text-overflow: ellipsis;
 }
 .region-count {
-  font-weight: 700;
-  color: var(--navy);
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: flex-end;
+  gap: 4px;                /* espacio entre número y flecha */
+  font-weight: 700;
+  color: var(--navy);
+  min-width: 70px;
+  white-space: nowrap;
 }
 .region-count .user-icon {
   width: 16px;
   height: 16px;
   fill: var(--muted);
   opacity: 0.8;
+}
+.region-arrow, .big-arrow {
+  margin-left: 2px;
+  display: flex;
+  align-items: center;
+}
+.region-arrow svg, .big-arrow svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 3;
 }
 
 /* --- Filtros --- */
@@ -495,4 +510,147 @@ main{
   }
 }
 
+/* Ejemplo CSS */
+.product-card .stars { margin-bottom: 16px; }
+.product-card .sold-count { margin-bottom: 12px; display: block; }
+.product-card .profitability { margin-bottom: 12px; display: block; }
+.big-arrow svg, .region-arrow svg {
+  display: inline-block;
+  vertical-align: middle;
+}
+.region-count, .dropper-count {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2px; /* menos espacio */
+  font-weight: 700;
+  color: var(--navy);
+  min-width: 70px;
+  white-space: nowrap;
+}
+.product-card .droppers { display: none; }
+/* --- Corrección de alineación número + flecha --- */
+/* --- Corrección visual: número + flecha alineados --- */
+.region-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px dashed #e0e0e0;
+}
 
+/* Contenedor del número y la flecha */
+.region-count {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;                /* espacio entre número y flecha */
+  font-weight: 700;
+  color: var(--navy);
+  min-width: 70px;
+  white-space: nowrap;
+}
+
+/* Ajuste responsive */
+@media (max-width: 600px) {
+  .region-count {
+    font-size: 14px;
+    gap: 1px;
+    min-width: 60px;
+  }
+}
+/* --- Modal base --- */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  width: 90%;
+  max-width: 420px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  text-align: center;
+}
+
+.close-modal {
+  background: none;
+  border: none;
+  font-size: 22px;
+  font-weight: bold;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  cursor: pointer;
+  color: #444;
+}
+
+/* Nuevos estilos input */
+.input-woz {
+  width: 100%;
+  height: 48px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 14px;
+  padding: 0 14px;
+  font-size: 1.08em;
+  background: #fafbfc;
+  transition: border 0.2s;
+  box-sizing: border-box;
+}
+.input-woz:focus {
+  border-color: #3897f0;
+  outline: none;
+}
+textarea.input-woz {
+  height: 80px;
+  padding-top: 10px;
+  resize: vertical;
+}
+form label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 4px;
+  text-align: left;
+  color: #222;
+}
+.ayuda-precio {
+  color: #3897f0;
+  font-size: 0.82em;
+  margin: -10px 0 10px 2px;
+  text-align: left;
+  font-weight: 400;
+}
+.gs-prefix {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 1em;
+  pointer-events: none;
+}
+#precioVendedor {
+  padding-left: 38px;
+}
+#venderModal {
+  overflow-y: auto;
+}
+.modal-content {
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.woz-bold {
+  font-family: 'Roboto', Arial, sans-serif;
+  font-weight: 900;
+  font-size: 1.15em;
+  color: #12202B;
+  letter-spacing: -1px;
+}
